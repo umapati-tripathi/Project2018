@@ -1,0 +1,931 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.oami.europa.eu/TM-Search"
+  targetNamespace="http://www.oami.europa.eu/TM-Search" version="1.0" elementFormDefault="qualified"
+  attributeFormDefault="unqualified">
+
+	<!-- ********************************************************************** -->
+	<!-- *                                                                    * -->
+	<!-- * TM-XML Version 0.6                                      2016-02-22 * -->
+	<!-- *                                                                    * -->
+	<!-- *====================================================================* -->
+	<!-- *                                                                    * -->
+	<!-- * XML Schema of TM-XML Data Model for Trade Marks                    * -->
+	<!-- *                                                                    * -->
+	<!-- ********************************************************************** -->
+
+	<xs:annotation>
+		<xs:documentation>TM-XML ST66 version, dated 22nd Feb 2016</xs:documentation>
+	</xs:annotation>
+
+	<!-- ====================================================================== -->
+	<!-- Include of external standard types                                     -->
+	<!-- ====================================================================== -->
+	<xs:include schemaLocation="external/ISOCountryCodeType-V2011.xsd"/>
+	<xs:include schemaLocation="external/ISOLanguageCodeType-V2002.xsd"/>
+	<xs:include schemaLocation="external/WIPOST3CodeType-V2011.xsd"/>
+
+	<!-- ********************************************************************** -->
+	<!-- ********************************************************************** -->
+	<!-- * TRANSACTION/MESSAGE TYPES LIBRARY ********************************** -->
+	<!-- ********************************************************************** -->
+	<!-- ********************************************************************** -->
+
+	<!-- ====================================================================== -->
+	<!-- Root Messages                                                          -->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<!-- Top Level Transaction for all Types of Message                         -->
+	<!-- ====================================================================== -->
+	<xs:element name="Transaction" type="TransactionType"/>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : TransactionBodyType.xsd                                  -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="TransactionBodyType">
+		<xs:sequence>
+			<xs:element name="TransactionErrorDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="TransactionError" type="TransactionErrorType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="TransactionContentDetails">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="TransactionIdentifier" type="xs:token" />
+						<xs:element name="TransactionCode" type="TransactionCodeType"/>
+						<xs:element name="TransactionData" type="TransactionDataType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : TransactionDataType.xsd                                  -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="TransactionDataType">
+		<xs:sequence>
+			<!-- ================================================================= -->
+			<!-- Set of Trade Marks                                                -->
+			<!-- ================================================================= -->
+			<xs:element name="TradeMarkDetails">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="TradeMark" type="TradeMarkType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : TransactionErrorType.xsd                                 -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="TransactionErrorType">
+		<xs:sequence>
+			<xs:element name="TransactionErrorCode" type="TransactionErrorCodeType" />
+			<xs:element name="TransactionErrorText" type="xs:token" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : TransactionHeaderType.xsd                                -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="TransactionHeaderType">
+		<xs:sequence>
+			<xs:element name="SenderDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="RequestProducerDateTime" type="xs:dateTime"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : TransactionType.xsd                                      -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="TransactionType">
+		<xs:sequence>
+			<xs:element name="TransactionHeader" type="TransactionHeaderType" minOccurs="0"/>
+			<!-- ================================================================= -->
+			<!-- Trade mark transaction                                            -->
+			<!-- ================================================================= -->
+			<xs:element name="TradeMarkTransactionBody" type="TransactionBodyType" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ********************************************************************** -->
+	<!-- ********************************************************************** -->
+	<!-- * BUSINESS TYPES LIBRARY ********************************************* -->
+	<!-- ********************************************************************** -->
+	<!-- ********************************************************************** -->
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : AddressBookType.xsd                                      -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="AddressBookType">
+		<xs:sequence>
+			<xs:element name="FormattedNameAddress" type="FormattedNameAddressType"/>
+			<xs:element name="ContactInformationDetails" minOccurs="0"> 
+			<xs:complexType> 
+				<xs:sequence> 
+					<xs:element name="Phone" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="Email" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence> 
+			</xs:complexType> 
+			</xs:element> 
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : AddressType.xsd                                          -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="AddressType">
+		<xs:sequence>
+			<xs:element name="AddressCountryCode" type="ExtendedISOCountryCodeType" minOccurs="0"/>			
+			<xs:element name="FreeFormatAddress">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="FreeFormatAddressLine" type="xs:string" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>			
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- ====================================================================== -->
+	<!-- Filename    : ApplicantType.xsd                                        -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="ApplicantType">
+		<xs:sequence>
+			<xs:element name="ApplicantNationalityCode" type="NationalityCodeType" minOccurs="0"/>
+			<xs:element name="ApplicantLegalEntity" type="LegalEntityType" minOccurs="0"/>
+			<xs:element name="ApplicantAddressBook" type="AddressBookType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : BasicRecordType.xsd                                      -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="BasicRecordType">
+		<xs:sequence>
+			<xs:element name="RecordIdentifier" type="xs:string" minOccurs="0"/>
+			<xs:element name="RecordFilingDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="BasicRecordKind" type="xs:string" minOccurs="0"/>
+
+			<xs:element name="RecordPublicationDate" type="xs:date" minOccurs="0"/>
+
+			<xs:element name="ClaimantDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Claimant" type="ClaimantType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="RepresentativeDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Representative" type="RepresentativeType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : ClaimantType.xsd                                         -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="ClaimantType">
+		<xs:sequence>
+			<xs:element name="ClaimantNationalityCode" type="NationalityCodeType" minOccurs="0"/>
+			<xs:element name="ClaimantLegalEntity" type="LegalEntityType" minOccurs="0"/>
+			<xs:element name="ClaimantAddressBook" type="AddressBookType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : ClassDescriptionType.xsd                                 -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="ClassDescriptionType">
+		<xs:sequence>
+			<xs:element name="ClassNumber" type="ClassNumberType" minOccurs="0"/>
+			<xs:element name="GoodsServicesDescription" type="TextType" minOccurs="0" maxOccurs="unbounded"/>			
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : FormattedNameAddressType.xsd                             -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="FormattedNameAddressType">
+		<xs:sequence>
+			<xs:element name="Name" type="NameType" minOccurs="0"/>
+			<xs:element name="Address" type="AddressType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : FreeFormatNameType.xsd                                   -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="FreeFormatNameType">
+		<xs:sequence>
+			<xs:element name="FreeFormatNameDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="FreeFormatNameLine" type="xs:string" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : GoodsServicesType.xsd                                    -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="GoodsServicesType">
+		<xs:sequence>
+			<xs:element name="ClassificationKindCode" type="ClassificationKindCodeType" minOccurs="0"/>
+			<xs:element name="ClassDescriptionDetails">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ClassDescription" type="ClassDescriptionType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : KeyType.xsd                                              -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="KeyType">
+		<xs:sequence>
+			<xs:element name="Identifier" type="xs:token" minOccurs="0" />
+			<xs:element name="URI" type="URIType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : MarkImageCategoryType.xsd                                -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="MarkImageCategoryType">
+		<xs:sequence>
+			<xs:element name="CategoryKind" type="CategoryKindType" minOccurs="0"/>
+			<xs:element name="CategoryVersion" type="xs:string" minOccurs="0"/>
+			<xs:element name="CategoryCodeDetails">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="CategoryCode" type="CategoryCodeType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : MarkImageType.xsd                                        -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="MarkImageType">
+		<xs:sequence>
+			<xs:element name="MarkImageFilename" type="xs:string" />
+			<xs:element name="MarkImageColourIndicator" type="xs:boolean"/>
+			<xs:element name="MarkImageColourClaimedText" type="TextType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="MarkImageCategory" type="MarkImageCategoryType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : MarkRecordType.xsd                                       -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="MarkRecordType">
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element name="BasicRecord" type="BasicRecordType"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : NameType.xsd                                             -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="NameType">
+		<xs:sequence>
+			<xs:element name="FreeFormatName" type="FreeFormatNameType"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : OpponentType.xsd                                         -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="OpponentType">
+		<xs:sequence>
+			<xs:element name="OpponentNationalityCode" type="NationalityCodeType" minOccurs="0"/>
+			<xs:element name="OpponentLegalEntity" type="LegalEntityType" minOccurs="0"/>
+			<xs:element name="OpponentAddressBook" type="AddressBookType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : OppositionType.xsd                                       -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="OppositionType">
+		<xs:sequence>
+			<xs:element name="OppositionIdentifier" type="xs:string" minOccurs="0"/>
+			<xs:element name="OppositionDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="OppositionReference" type="xs:string" minOccurs="0"/>
+			
+			<xs:element name="OpponentDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Opponent" type="OpponentType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="RepresentativeDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Representative" type="RepresentativeType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : PriorityType.xsd                                         -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="PriorityType">
+		<xs:sequence>
+			<xs:element name="PriorityCountryCode">
+				<xs:simpleType>
+					<xs:union memberTypes="WIPOST3CodeType WIPOFormerST3CodeType"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="PriorityNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="PriorityDate" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : PublicationType.xsd                                      -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="PublicationType">
+		<xs:sequence>
+			<xs:element name="PublicationIdentifier" type="xs:string"/>
+			<xs:element name="PublicationSection" type="xs:string" minOccurs="0"/>
+			<xs:element name="PublicationDate" type="xs:date" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : RepresentativeType.xsd                                   -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="RepresentativeType">
+		<xs:sequence>
+			<xs:element name="RepresentativeNationalityCode" type="NationalityCodeType" minOccurs="0"/>
+			<xs:element name="RepresentativeLegalEntity" type="LegalEntityType" minOccurs="0"/>
+			<xs:element name="RepresentativeAddressBook" type="AddressBookType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : TradeMarkType.xsd                                        -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="TradeMarkType">
+		<xs:sequence>
+			<xs:element name="RegistrationOfficeCode" type="WIPOST3CodeType" minOccurs="0" fixed="IN"/>
+
+			<xs:element name="ApplicationNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="ApplicationDate" type="xs:date"/>
+			
+			<xs:element name="RegistrationNumber" type="xs:string" minOccurs="0"/>
+			<xs:element name="RegistrationDate" type="xs:date" minOccurs="0"/>
+
+			<xs:element name="IPRKind" type="IPRKindType" default="Trade mark" minOccurs="0"/>
+
+			<xs:element name="FilingPlace" type="xs:string" minOccurs="0"/>
+
+			<xs:element name="ApplicationLanguageCode" type="ExtendedISOLanguageCodeType" minOccurs="0" fixed="en"/>
+
+			<xs:element name="ExpiryDate" type="xs:date" minOccurs="0"/>
+			
+			<xs:element name="MarkCurrentStatusCode" type="MarkCurrentStatusCodeType" />
+						
+			<xs:element name="KindMark" type="KindMarkType" minOccurs="0"/>
+			<xs:element name="MarkFeature" type="MarkFeatureType" minOccurs="0"/>
+
+			<xs:element name="MarkDescriptionDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="MarkDescription" type="TextType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="MarkDisclaimerDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="MarkDisclaimer" type="TextType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="TotalMarkSeries" type="xs:integer" minOccurs="0"/>
+			<xs:element name="Comment" type="xs:string" minOccurs="0"/>
+
+			<xs:element name="OppositionPeriodStartDate" type="xs:date" minOccurs="0"/>
+			<xs:element name="OppositionPeriodEndDate" type="xs:date" minOccurs="0"/>
+
+			<xs:element name="WordMarkSpecification" type="WordMarkSpecificationType" minOccurs="0"/>
+
+			<xs:element name="MarkImageDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="MarkImage" type="MarkImageType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="GoodsServicesDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="GoodsServices" type="GoodsServicesType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="PriorityDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Priority" type="PriorityType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="PublicationDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Publication" type="PublicationType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="ApplicantDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Applicant" type="ApplicantType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="RepresentativeDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Representative" type="RepresentativeType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="OppositionDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Opposition" type="OppositionType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+			<xs:element name="MarkRecordDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="MarkRecord" type="MarkRecordType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+
+		</xs:sequence>
+		<xs:attribute name="operationCode" type="OperationCodeType" use="optional"/>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : WordMarkSpecificationType.xsd                            -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="WordMarkSpecificationType">
+		<xs:sequence>
+			<xs:element name="MarkVerbalElementText" type="TextType" minOccurs="0"/>
+			<xs:element name="MarkStandardCharacterIndicator" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- ********************************************************************** -->
+	<!-- ********************************************************************** -->
+	<!-- * ADDITIONAL TYPES LIBRARY ******************************************* -->
+	<!-- * ******************************************************************** -->
+	<!-- ********************************************************************** -->
+	<!-- ====================================================================== -->
+	<!-- Filename    : CategoryCodeType.xsd                                     -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="CategoryCodeType">
+		<xs:union memberTypes="xs:token">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[0-9][0-9]\.[0-9][0-9]\.[0-9][0-9]|[0-9][0-9]\.[0-9][0-9]|([0-9][0-9]){4}|([0-9][0-9]){6}"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : CategoryKindType.xsd                                     -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="CategoryKindType">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Vienna"/>
+			<xs:enumeration value="Domestic"/>
+			<xs:enumeration value="Undefined"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : ClassNumberStatusCodeType.xsd                            -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="ClassNumberStatusCodeType">	
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Provisional"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : ClassNumberType.xsd                                      -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="ClassNumberType">
+		<xs:union memberTypes="xs:token NiceClassNumberType"/>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : ClassificationKindCodeType.xsd                           -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="ClassificationKindCodeType">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Nice"/>
+			<xs:enumeration value="Domestic"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : ExtendedISOCountryCodeType.xsd                           -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="ExtendedISOCountryCodeType">
+		<xs:union memberTypes="ISOCountryCodeType ISOFormerCountryCodeType"/>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : ExtendedISOLanguageCodeType.xsd                          -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2009-10-23                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="ExtendedISOLanguageCodeType">
+		<xs:union memberTypes="ISOLanguageCodeType">
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Undefined"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : ExtendedWIPOST3CodeType.xsd                              -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="ExtendedWIPOST3CodeType">
+		<xs:union memberTypes="WIPOST3CodeType WIPOFormerST3CodeType"/>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : KindMarkType.xsd                                         -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="KindMarkType">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Individual"/>
+			<xs:enumeration value="Collective"/>
+			<xs:enumeration value="Guarantee"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : MarkCurrentStatusCodeType.xsd                            -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="MarkCurrentStatusCodeType">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Application filed"/>
+			<xs:enumeration value="Application published"/>
+			<xs:enumeration value="Application opposed"/>
+			<xs:enumeration value="Application refused"/>
+			<xs:enumeration value="Application withdrawn"/>
+			<xs:enumeration value="Application ended"/>
+			<xs:enumeration value="Registered"/>
+			<xs:enumeration value="Registration cancelled"/>
+			<xs:enumeration value="Expired"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : MarkFeatureType.xsd                                      -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="MarkFeatureType">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Word"/>
+			<xs:enumeration value="Figurative"/>
+			<xs:enumeration value="Combined"/>
+			<xs:enumeration value="3-D"/>
+			<xs:enumeration value="Colour"/>
+			<xs:enumeration value="Sound"/>
+			<xs:enumeration value="Packing"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : LegalEntityType.xsd                                      -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="LegalEntityType">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Physical person"/>
+			<xs:enumeration value="Legal entity"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : NationalityCodeType.xsd                                  -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="NationalityCodeType">
+		<xs:union memberTypes="ExtendedISOCountryCodeType">
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="Stateless"/>
+					<xs:enumeration value="Unidentified"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:union>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : IPRKindType.xsd			                                -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	  <xs:simpleType name="IPRKindType">
+	    <xs:restriction base="xs:token">
+	      <xs:enumeration value="Trade mark"/>
+	      <xs:enumeration value="Logotype"/> <!-- PT -->
+	      <xs:enumeration value="Commercial name"/> <!-- ES -->
+	      <xs:enumeration value="Title of establishment"/> <!-- ES -->
+	      <xs:enumeration value="Slogan"/> <!-- MX -->
+	      <xs:enumeration value="Domestic"/> <!-- GR -->
+	      <xs:enumeration value="Foreign"/> <!-- GR -->
+	      <xs:enumeration value="Hallmark"/> <!-- NO -->
+	      <xs:enumeration value="6ter mark"/> <!-- NO -->
+	      <xs:enumeration value="Geographical indication"/> <!-- MA, RU -->
+	      <xs:enumeration value="Appellation of origin"/> <!-- MA -->
+	      <xs:enumeration value="Well-known mark"/> <!-- RU -->
+	    </xs:restriction>
+	  </xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : ISOFormerCountryCodeType.xsd                             -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="ISOFormerCountryCodeType">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="AN"/>
+			<xs:enumeration value="CS"/>
+			<xs:enumeration value="DL"/>
+			<xs:enumeration value="DD"/>
+			<xs:enumeration value="DT"/>
+			<xs:enumeration value="FX"/>
+			<xs:enumeration value="SU"/>
+			<xs:enumeration value="YD"/>
+			<xs:enumeration value="YU"/>
+			<xs:enumeration value="UK"/>
+			<xs:enumeration value="ZZ"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : NiceClassNumberType.xsd                                  -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="NiceClassNumberType">
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:maxInclusive value="45"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : OperationCodeType.xsd                                    -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="OperationCodeType">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Insert"/>
+			<xs:enumeration value="Delete"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : TextType.xsd                                             -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="TextType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="languageCode" type="xs:language" use="optional"/>
+				<xs:attribute name="sequenceNumber" type="xs:integer" use="optional"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : TransactionCodeType.xsd                                  -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="TransactionCodeType">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Trade Mark List"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : TransactionErrorCodeType.xsd                             -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="TransactionErrorCodeType">
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Error"/>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : URIType.xsd                                             -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:complexType name="URIType">
+		<xs:simpleContent>
+			<xs:extension base="xs:anyURI"/>
+		</xs:simpleContent>
+	</xs:complexType>
+
+	<!-- ====================================================================== -->
+	<!-- Filename    : WIPOFormerST3CodeType.xsd                                -->
+	<!-- Author      : TM-XML WG                                                -->
+	<!-- Version     : 1.0                                                      -->
+	<!-- Last Update : 2016-02-22                                               -->
+	<!-- ====================================================================== -->
+	<xs:simpleType name="WIPOFormerST3CodeType">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="CS"/>
+			<xs:enumeration value="DL"/>
+			<xs:enumeration value="DD"/>
+			<xs:enumeration value="DT"/>
+			<xs:enumeration value="SU"/>
+			<xs:enumeration value="YD"/>
+			<xs:enumeration value="YU"/>
+			<xs:enumeration value="UK"/>
+			<xs:enumeration value="ZZ"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

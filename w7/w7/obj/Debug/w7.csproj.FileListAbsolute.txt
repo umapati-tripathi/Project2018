@@ -1,0 +1,36 @@
+c:\users\umapati\documents\visual studio 2012\Projects\w7\w7\bin\Debug\w7.exe.config
+c:\users\umapati\documents\visual studio 2012\Projects\w7\w7\bin\Debug\w7.exe
+c:\users\umapati\documents\visual studio 2012\Projects\w7\w7\bin\Debug\w7.pdb
+c:\users\umapati\documents\visual studio 2012\Projects\w7\w7\obj\Debug\w7.Properties.Resources.resources
+c:\users\umapati\documents\visual studio 2012\Projects\w7\w7\obj\Debug\w7.csproj.GenerateResource.Cache
+c:\users\umapati\documents\visual studio 2012\Projects\w7\w7\obj\Debug\w7.exe
+c:\users\umapati\documents\visual studio 2012\Projects\w7\w7\obj\Debug\w7.pdb
+C:\Users\umapati\documents\visual studio 2012\Projects\w7\w7\obj\Debug\w7.Form1.resources
+C:\Users\umapati\documents\visual studio 2012\Projects\w7\w7\obj\Debug\w7.csprojResolveAssemblyReference.cache
+C:\Users\uma\Documents\Visual Studio 2012\Projects\w7\w7\bin\Debug\w7.exe.config
+C:\Users\uma\Documents\Visual Studio 2012\Projects\w7\w7\obj\Debug\w7.exe
+C:\Users\uma\Documents\Visual Studio 2012\Projects\w7\w7\obj\Debug\w7.pdb
+C:\Users\uma\Documents\Visual Studio 2012\Projects\w7\w7\bin\Debug\w7.exe
+C:\Users\uma\Documents\Visual Studio 2012\Projects\w7\w7\bin\Debug\w7.pdb
+C:\Users\uma\Documents\Visual Studio 2012\Projects\w7\w7\obj\Debug\w7.csprojResolveAssemblyReference.cache
+C:\Users\uma\Documents\Visual Studio 2012\Projects\w7\w7\obj\Debug\w7.Form1.resources
+C:\Users\uma\Documents\Visual Studio 2012\Projects\w7\w7\obj\Debug\w7.Properties.Resources.resources
+C:\Users\uma\Documents\Visual Studio 2012\Projects\w7\w7\obj\Debug\w7.csproj.GenerateResource.Cache
+D:\w7\w7\bin\Debug\w7.exe.config
+D:\w7\w7\obj\Debug\w7.exe
+D:\w7\w7\obj\Debug\w7.pdb
+D:\w7\w7\bin\Debug\w7.exe
+D:\w7\w7\bin\Debug\w7.pdb
+D:\w7\w7\obj\Debug\w7.Form1.resources
+D:\w7\w7\obj\Debug\w7.Properties.Resources.resources
+D:\w7\w7\obj\Debug\w7.csproj.GenerateResource.Cache
+C:\Users\uma\Desktop\w7\w7\bin\Debug\w7.exe.config
+C:\Users\uma\Desktop\w7\w7\obj\Debug\w7.exe
+C:\Users\uma\Desktop\w7\w7\obj\Debug\w7.pdb
+C:\Users\uma\Desktop\w7\w7\bin\Debug\w7.exe
+C:\Users\uma\Desktop\w7\w7\bin\Debug\w7.pdb
+C:\Users\uma\Desktop\w7\w7\obj\Debug\w7.csprojResolveAssemblyReference.cache
+C:\Users\uma\Desktop\w7\w7\obj\Debug\w7.Form1.resources
+C:\Users\uma\Desktop\w7\w7\obj\Debug\w7.Properties.Resources.resources
+C:\Users\uma\Desktop\w7\w7\obj\Debug\w7.csproj.GenerateResource.Cache
+D:\w7\w7\obj\Debug\w7.csprojResolveAssemblyReference.cache
